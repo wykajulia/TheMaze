@@ -38,10 +38,10 @@ public class TheMap extends JFrame {
         
         
           try {
-                wall= ImageIO.read(new File("wall2.png"));
+                wall= ImageIO.read(new File("wall.png"));
                 grass= ImageIO.read(new File("grass.png"));
-                man= ImageIO.read(new File("man.png"));
-                task = ImageIO.read(new File("task.png"));
+                man= ImageIO.read(new File("unicorn.png"));
+                task = ImageIO.read(new File("star.png"));
 
           } catch (IOException ex) {
               Logger.getLogger(TheMaze.class.getName()).log(Level.SEVERE, null, ex);
