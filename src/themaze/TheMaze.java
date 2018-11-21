@@ -5,36 +5,80 @@
  */
 package themaze;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
+import static java.lang.Thread.sleep;
+import java.util.Random;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  *
  * @author wykaj
  */
 public class TheMaze extends TheMap  implements KeyListener {
-
-   TheMaze()
+    
+   String wynik; 
+   int a;
+   int b;
+   int score = 0;
+  
+  
+   
+   TheMaze() throws InterruptedException
    {
        addKeyListener(this);
-   }
        
+   }
+   
+    public int exercise()
+    {   
+       
+          Random r = new Random();
+          int n= r.nextInt(9) + 1; 
+          int m= r.nextInt(9) + 1; 
+
+          return n+m; 
+    }
     
-    public static void main(String[] args) {
+    public void check(int c, int d)
+    {
+        if( c+d == Integer.parseInt(wynik))
+        {
+        score ++;
+        JOptionPane.showMessageDialog(null, "Dobra odpowiedź!");
+        }
+        else 
+        {
+        score--;
+        JOptionPane.showMessageDialog(null, "Zła odpowiedź :( ");
+        }
+        
+        System.out.println(score);
+    }       
+    
+    public void doit()
+    {
+         a=exercise();
+          b =exercise();
+        wynik =  JOptionPane.showInputDialog(null, "Podaj wynik:  " + a + " + " + b);
+       check(a,b);
+    }
+    
+    public static void main(String[] args) throws InterruptedException  {
         // TODO code application logic here
         TheMaze game = new TheMaze();
+       
         game.setVisible(true);
         game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
+        game.setLocation(600,180);
+       
+      
     }
 
     @Override
@@ -57,37 +101,53 @@ public class TheMaze extends TheMap  implements KeyListener {
                } 
             else if (board[x-1][y]==3)
             {
-                System.out.println("zadanie");
                  x--;
                  board[x][y]=2;
                  board[x+1][y]=0;
-                   
+                 doit();  
             }
                break;
            case 40:
-           if (board[x+1][y]!=1 && board[x][y]!=3) //&& (plansza.length > 0) && (plansza[x+1][y]!=1))
+           if (board[x+1][y]!=1 && board[x+1][y]!=3) //&& (plansza.length > 0) && (plansza[x+1][y]!=1))
              {   x++;
                board[x][y]=2;
              board[x-1][y]=0;
             } 
-         //  else if (plansza[x][y]==3)
-          // {
-            //   plansza[x][y]=0;
-          // }
+         else if (board[x+1][y]==3)
+          {
+            x++;
+               board[x][y]=2;
+             board[x-1][y]=0;
+             doit();
+          }
            break;
             case 39:
-            if (board[x][y+1]!=1) //&& plansza.length > 0 && plansza[x][y+1]!=1)
+            if (board[x][y+1]!=1 && board[x][y+1]!=3) //&& plansza.length > 0 && plansza[x][y+1]!=1)
                {   y++;
                    board[x][y]=2;
                    board[x][y-1]=0;
                } 
+            else if (board[x][y+1]==3)
+            {      y++;
+                   board[x][y]=2;
+                   board[x][y-1]=0;
+                   doit();
+                
+            }
+            
                break;
            case 37:
-           if (board[x][y-1]!=1 )//&& plansza.length > 0 && plansza[x][y-1]!=1)
+           if (board[x][y-1]!=1 && board[x][y-1]!=3)//&& plansza.length > 0 && plansza[x][y-1]!=1)
              {   y--;
                board[x][y]=2;
              board[x][y+1]=0;
             } 
+           else if (board[x][y-1]==3)
+           {    y--;
+               board[x][y]=2;
+             board[x][y+1]=0;
+               doit();
+           }
            break;
        }
        repaint();
@@ -96,5 +156,7 @@ public class TheMaze extends TheMap  implements KeyListener {
     @Override
     public void keyReleased(KeyEvent arg0) {
     }
+    
+   
     
 }

@@ -1,16 +1,22 @@
 package themaze;
 
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import static java.lang.Thread.sleep;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -28,13 +34,16 @@ public class TheMap extends JFrame {
       private Image wall,man,grass,task;
       int x=5; //random();
       int y=7; //random();
+     // private final Font smallFont = new Font("Helvetica", Font.BOLD, 14);
+
       
-      public TheMap()
+      public TheMap() throws InterruptedException
       {
-         setSize(700,700);
+         setSize(700,780);
         setLayout(null);
         setResizable(false);
          
+    
         
         
           try {
@@ -47,7 +56,11 @@ public class TheMap extends JFrame {
               Logger.getLogger(TheMaze.class.getName()).log(Level.SEVERE, null, ex);
           }
 
+        
         create();
+        
+        
+        
         
       }
       public int random()
@@ -57,19 +70,23 @@ public class TheMap extends JFrame {
           return n;
       }
       
+     
+      
       public void create()
       {    
+          
           int board2[][] = {{1,1,1,1,1,1,1,1,1,1},
-                         {1,0,0,0,0,0,0,0,0,1},
-                         {1,0,0,1,1,1,0,0,0,1},
-                         {1,0,0,0,0,0,0,0,0,1},
-                         {1,1,1,0,1,0,0,0,0,1},
+                         {1,0,1,0,1,0,1,0,0,1},
+                         {1,0,1,0,0,0,1,0,1,1},
+                         {1,0,0,0,0,0,1,0,0,1},
+                         {1,1,1,0,1,1,1,0,0,1},
                          {1,0,0,0,1,0,0,0,0,1},
-                         {1,0,1,0,1,0,0,0,0,1},
-                         {1,0,1,0,1,0,0,0,0,1},
-                         {1,0,0,0,1,0,0,0,0,1},
+                         {1,0,1,0,0,0,0,1,1,1},
+                         {1,0,1,1,0,1,0,0,0,1},
+                         {1,0,0,0,0,1,0,0,0,1},
                          {1,1,1,1,1,1,1,1,1,1}
                          };
+         
           
           //ustawienie ludzika
           for(int i=0; i<10;i++)
@@ -96,15 +113,29 @@ public class TheMap extends JFrame {
         public void paint(Graphics g)
     {
         drawTheMap(g);
+        
     }
       
+    /* private void drawScore(Graphics2D g) {
+
+        int i;
+        String s;
+
+        g.setFont(smallFont);
+        g.setColor(new Color(96, 128, 255));
+        s = "Score: " ; //+ score;
+        g.drawString(s, 1000,100);
+
+       
+    }  */
+        
        public void drawTheMap(Graphics g)
        {
            
         Image img=createImage(getSize().width, getSize().height);
        Graphics2D g2=(Graphics2D)img.getGraphics();
      
-        
+       
         for(int i=0; i<10 ; i++)
       {
             for (int j=0; j<10 ; j++)
@@ -134,6 +165,23 @@ public class TheMap extends JFrame {
         }
         
         
+
       g.drawImage(img, 0, 0, this);
+     //   drawScore(g2);
    }
-}
+       
+      
+    
+    
+     
+       
+     //JLabel scoreLabel = new JLabel("Score: 0");
+      // int Score = 0;
+   // public void someoneScored()
+    //{
+    //scoreLabel.setBounds(10, 10, 100, 50);
+    //scoreLabel.setText("Score: " + Score);
+    
+   // JOptionPane.showMessageDialog(null, "Your score : " + Score);
+    //}
+    }
