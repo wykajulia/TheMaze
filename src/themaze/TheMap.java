@@ -35,6 +35,8 @@ public class TheMap extends JFrame {
       int x=5; //random();
       int y=7; //random();
      // private final Font smallFont = new Font("Helvetica", Font.BOLD, 14);
+     
+    
 
       
       public TheMap() throws InterruptedException
@@ -70,7 +72,7 @@ public class TheMap extends JFrame {
           return n;
       }
       
-     
+    
       
       public void create()
       {    
@@ -164,17 +166,13 @@ public class TheMap extends JFrame {
             }
         }
         
-        
-
-      g.drawImage(img, 0, 0, this);
+      
+      g.drawImage(img, 0, 0, this); 
+     // g.drawString("GRASZ DALEJ?" + TheMaze.score ,100, 720);
      //   drawScore(g2);
    }
        
       
-    
-    
-     
-       
      //JLabel scoreLabel = new JLabel("Score: 0");
       // int Score = 0;
    // public void someoneScored()

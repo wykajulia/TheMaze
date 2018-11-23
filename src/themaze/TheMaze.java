@@ -5,35 +5,31 @@
  */
 package themaze;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import static java.lang.Thread.sleep;
 import java.util.Random;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+
 
 /**
  *
  * @author wykaj
  */
-public class TheMaze extends TheMap  implements KeyListener {
+public class TheMaze extends TheMap implements KeyListener {
     
    String wynik; 
    int a;
    int b;
-   int score = 0;
+  static int score = 0;
   
   
    
    TheMaze() throws InterruptedException
    {
-       addKeyListener(this);
-       
+       addKeyListener(this);      
    }
    
     public int exercise()
@@ -64,21 +60,24 @@ public class TheMaze extends TheMap  implements KeyListener {
     
     public void doit()
     {
-         a=exercise();
-          b =exercise();
+        a=exercise();
+        b =exercise();
         wynik =  JOptionPane.showInputDialog(null, "Podaj wynik:  " + a + " + " + b);
-       check(a,b);
+        check(a,b);
     }
     
     public static void main(String[] args) throws InterruptedException  {
         // TODO code application logic here
         TheMaze game = new TheMaze();
-       
+        
         game.setVisible(true);
         game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         game.setLocation(600,180);
+        game.timer();
        
-      
+        
+        
+       
     }
 
     @Override
@@ -157,6 +156,19 @@ public class TheMaze extends TheMap  implements KeyListener {
     public void keyReleased(KeyEvent arg0) {
     }
     
-   
     
+   public void timer () throws InterruptedException
+    {
+      int start = 5;
+      
+      do 
+      {
+         System.out.println(start);
+         start --;
+         sleep(1000);
+      }
+      while (start > 0);
+    }  
+    
+ 
 }
