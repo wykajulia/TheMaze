@@ -24,6 +24,7 @@ public class TheMaze extends TheMap implements KeyListener {
    int a;
    int b;
   static int score = 0;
+  static int numberOfMoves=20;
   
   
    
@@ -92,11 +93,13 @@ public class TheMaze extends TheMap implements KeyListener {
        
        switch(move)
        {
-           case 38:
+           case 38: 
+            numberOfMoves--;
             if (board[x-1][y]==0 && board[x-1][y]!=3)//&&(plansza[x-1][y]!=1))
                {   x--;
                    board[x][y]=2;
                    board[x+1][y]=0; 
+                 
                } 
             else if (board[x-1][y]==3)
             {
@@ -104,9 +107,11 @@ public class TheMaze extends TheMap implements KeyListener {
                  board[x][y]=2;
                  board[x+1][y]=0;
                  doit();  
+                
             }
                break;
            case 40:
+                numberOfMoves--;
            if (board[x+1][y]!=1 && board[x+1][y]!=3) //&& (plansza.length > 0) && (plansza[x+1][y]!=1))
              {   x++;
                board[x][y]=2;
@@ -121,6 +126,7 @@ public class TheMaze extends TheMap implements KeyListener {
           }
            break;
             case 39:
+                 numberOfMoves--;
             if (board[x][y+1]!=1 && board[x][y+1]!=3) //&& plansza.length > 0 && plansza[x][y+1]!=1)
                {   y++;
                    board[x][y]=2;
@@ -136,6 +142,7 @@ public class TheMaze extends TheMap implements KeyListener {
             
                break;
            case 37:
+                numberOfMoves--;
            if (board[x][y-1]!=1 && board[x][y-1]!=3)//&& plansza.length > 0 && plansza[x][y-1]!=1)
              {   y--;
                board[x][y]=2;
@@ -162,12 +169,12 @@ public class TheMaze extends TheMap implements KeyListener {
       int start = 5;
       
       do 
-      {
-         System.out.println(start);
+      { System.out.println(start);
          start --;
          sleep(1000);
       }
       while (start > 0);
+      
     }  
     
  

@@ -44,8 +44,7 @@ public class TheMap extends JFrame {
          setSize(700,780);
         setLayout(null);
         setResizable(false);
-         
-    
+       setBackground(Color.LIGHT_GRAY);    
         
         
           try {
@@ -118,22 +117,22 @@ public class TheMap extends JFrame {
         
     }
       
-    /* private void drawScore(Graphics2D g) {
+  /*   private void drawScore(Graphics2D g) {
 
-        int i;
+        
         String s;
 
-        g.setFont(smallFont);
+        
         g.setColor(new Color(96, 128, 255));
-        s = "Score: " ; //+ score;
-        g.drawString(s, 1000,100);
+        s = "Score: " + TheMaze.score;
+        g.drawString(s, 100,710);
 
        
     }  */
         
        public void drawTheMap(Graphics g)
        {
-           
+          
         Image img=createImage(getSize().width, getSize().height);
        Graphics2D g2=(Graphics2D)img.getGraphics();
      
@@ -168,8 +167,14 @@ public class TheMap extends JFrame {
         
       
       g.drawImage(img, 0, 0, this); 
-     // g.drawString("GRASZ DALEJ?" + TheMaze.score ,100, 720);
+     //  g.setColor(new Color(96, 128, 255));
+     g.setColor(Color.DARK_GRAY);
+     g.setFont(new Font("TimesRoman", Font.PLAIN, 25));
+      g.drawString("Liczba punktów: " + TheMaze.score ,20, 740);
      //   drawScore(g2);
+      g.drawString("Czas: " + 50 + " s",240, 740);
+      g.drawString("Pozostało ruchów: " +TheMaze.numberOfMoves ,380, 740);
+      
    }
        
       
