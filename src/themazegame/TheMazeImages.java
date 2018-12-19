@@ -1,5 +1,9 @@
-package themaze;
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package themazegame;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -8,71 +12,50 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
-import static java.lang.Thread.sleep;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  *
  * @author wykaj
  */
-public class TheMap extends JFrame {
+public class TheMazeImages extends JFrame{
     
+     public Image wall,unicorn,grass,task;
      int[][]board=new int[10][10];
-      private Image wall,man,grass,task;
-      int x=5; //random();
-      int y=7; //random();
-     // private final Font smallFont = new Font("Helvetica", Font.BOLD, 14);
+     int board2[][];
+     int x=5; 
+     int y=7;
      
-    
+     public TheMazeImages()
+     {
 
-      
-      public TheMap() throws InterruptedException
-      {
-         setSize(700,780);
-        setLayout(null);
-        setResizable(false);
-       setBackground(Color.LIGHT_GRAY);    
-        
-        
-          try {
-                wall= ImageIO.read(new File("wall.png"));
-                grass= ImageIO.read(new File("grass.png"));
-                man= ImageIO.read(new File("unicorn.png"));
-                task = ImageIO.read(new File("star.png"));
-
-          } catch (IOException ex) {
-              Logger.getLogger(TheMaze.class.getName()).log(Level.SEVERE, null, ex);
-          }
-
-        
-        create();
-        
-        
-        
-        
-      }
-      public int random()
+         try {
+             wall= ImageIO.read(new File("wall.png"));
+             grass= ImageIO.read(new File("grass.png"));
+             unicorn= ImageIO.read(new File("unicorn.png"));
+             task = ImageIO.read(new File("star.png"));
+         } catch (IOException ex) {
+             Logger.getLogger(TheMazeImages.class.getName()).log(Level.SEVERE, null, ex);
+         }
+         
+         create();
+ 
+     }
+     
+       public int random()
       {
           Random r = new Random();
           int n= r.nextInt(9) + 1;
           return n;
       }
       
-    
-      
+     
+       
       public void create()
       {    
           
@@ -110,7 +93,7 @@ public class TheMap extends JFrame {
           }
       }
       
-      @Override
+      //@Override
         public void paint(Graphics g)
     {
         drawTheMap(g);
@@ -151,7 +134,7 @@ public class TheMap extends JFrame {
                         g2.drawImage(wall, 70*j, 70*i, this);
                         break;
                     case 2:
-                        g2.drawImage(man, 70*j,70*i, this);
+                        g2.drawImage(unicorn, 70*j,70*i, this);
                         break;
                     case 3:
                        g2.drawImage(task, 70*j,70*i, this);
@@ -170,21 +153,14 @@ public class TheMap extends JFrame {
      //  g.setColor(new Color(96, 128, 255));
      g.setColor(Color.DARK_GRAY);
      g.setFont(new Font("TimesRoman", Font.PLAIN, 25));
-      g.drawString("Liczba punktów: " + TheMaze.score ,20, 740);
-     //   drawScore(g2);
-      g.drawString("Czas: " + 50 + " s",240, 740);
-      g.drawString("Pozostało ruchów: " +TheMaze.numberOfMoves ,380, 740);
+      g.drawString("Liczba punktów: " + WalkingUnicorn.score  ,20, 740);
+        
+             //   drawScore(g2);
+             g.drawString("Czas: " /*+  TheMazeGame.start/1000 */ + " s",240, 740);
+        
+      g.drawString("Pozostało ruchów: " + WalkingUnicorn.numberOfMoves ,380, 740);
       
    }
-       
       
-     //JLabel scoreLabel = new JLabel("Score: 0");
-      // int Score = 0;
-   // public void someoneScored()
-    //{
-    //scoreLabel.setBounds(10, 10, 100, 50);
-    //scoreLabel.setText("Score: " + Score);
-    
-   // JOptionPane.showMessageDialog(null, "Your score : " + Score);
-    //}
-    }
+       
+}

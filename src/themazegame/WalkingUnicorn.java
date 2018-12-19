@@ -3,8 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package themaze;
-
+package themazegame;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -13,26 +12,30 @@ import java.util.Random;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-
-/**
+/*
  *
  * @author wykaj
  */
-public class TheMaze extends TheMap implements KeyListener {
+public class WalkingUnicorn extends TheMazeImages implements KeyListener{
     
    String wynik; 
    int a;
    int b;
-  static int score = 0;
-  static int numberOfMoves=20;
-  
+   static int score = 0;
+   static int time =0;
+   static int numberOfMoves = 5;
+   static long stop;
+ // static int time = timer();
+  //long start=System.currentTimeMillis();
   
    
-   TheMaze() throws InterruptedException
+   WalkingUnicorn() throws InterruptedException
    {
-       addKeyListener(this);      
+       addKeyListener(this); 
+      
    }
    
+
     public int exercise()
     {   
        
@@ -48,38 +51,44 @@ public class TheMaze extends TheMap implements KeyListener {
         if( c+d == Integer.parseInt(wynik))
         {
         score ++;
-        JOptionPane.showMessageDialog(null, "Dobra odpowiedź!");
+        //JOptionPane.showMessageDialog(null, "Dobra odpowiedź!");
+        JOptionPane.showMessageDialog(null,  "Dobra odpowiedź!","", JOptionPane.NO_OPTION);
         }
         else 
         {
         score--;
-        JOptionPane.showMessageDialog(null, "Zła odpowiedź :( ");
+        //JOptionPane.showMessageDialog(null, "Zła odpowiedź :( ");
+        JOptionPane.showMessageDialog(null, "Zła odpowiedź :(","", JOptionPane.ERROR_MESSAGE);
+
         }
         
         System.out.println(score);
-    }       
+    }  
+    
+     void movescheck() 
+    {
+     if (numberOfMoves <=0)
+     {     
+         stop=System.currentTimeMillis();
+         long x=(stop - TheMazeGame.start)/1000;
+         JOptionPane.showMessageDialog(null, "Twoje ruchy się skończyły. Zdobyłes " + score + " punktów. W czasie : " + x + "s" );
+         TheMazeGame.game.dispose();
+         Menu menu = new Menu();
+         restartGame();
+           
+          //System.exit(0);
+          
+     }
+    }
     
     public void doit()
     {
         a=exercise();
         b =exercise();
-        wynik =  JOptionPane.showInputDialog(null, "Podaj wynik:  " + a + " + " + b);
+        wynik =  JOptionPane.showInputDialog(null, "Podaj wynik:  " + a + " + " + b );
         check(a,b);
     }
     
-    public static void main(String[] args) throws InterruptedException  {
-        // TODO code application logic here
-        TheMaze game = new TheMaze();
-        
-        game.setVisible(true);
-        game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        game.setLocation(600,180);
-        game.timer();
-       
-        
-        
-       
-    }
 
     @Override
     public void keyTyped(KeyEvent arg0) {
@@ -89,17 +98,16 @@ public class TheMaze extends TheMap implements KeyListener {
     @Override
    public void keyPressed(KeyEvent k) {
          int move = k.getKeyCode();
-      // int num = num();
        
        switch(move)
        {
-           case 38: 
-            numberOfMoves--;
-            if (board[x-1][y]==0 && board[x-1][y]!=3)//&&(plansza[x-1][y]!=1))
-               {   x--;
+           case 38:            
+            if (board[x-1][y]==0 && board[x-1][y]!=3)
+               {  
+                   x--;
                    board[x][y]=2;
                    board[x+1][y]=0; 
-                 
+                   numberOfMoves--;                  
                } 
             else if (board[x-1][y]==3)
             {
@@ -107,15 +115,17 @@ public class TheMaze extends TheMap implements KeyListener {
                  board[x][y]=2;
                  board[x+1][y]=0;
                  doit();  
-                
+                 numberOfMoves--;
             }
+            movescheck();
                break;
            case 40:
-                numberOfMoves--;
-           if (board[x+1][y]!=1 && board[x+1][y]!=3) //&& (plansza.length > 0) && (plansza[x+1][y]!=1))
+                
+           if (board[x+1][y]!=1 && board[x+1][y]!=3) 
              {   x++;
                board[x][y]=2;
              board[x-1][y]=0;
+             numberOfMoves--;
             } 
          else if (board[x+1][y]==3)
           {
@@ -123,38 +133,45 @@ public class TheMaze extends TheMap implements KeyListener {
                board[x][y]=2;
              board[x-1][y]=0;
              doit();
+            numberOfMoves--;
           }
+           movescheck();
            break;
             case 39:
-                 numberOfMoves--;
+                
             if (board[x][y+1]!=1 && board[x][y+1]!=3) //&& plansza.length > 0 && plansza[x][y+1]!=1)
                {   y++;
                    board[x][y]=2;
                    board[x][y-1]=0;
+                   numberOfMoves--;
                } 
             else if (board[x][y+1]==3)
             {      y++;
                    board[x][y]=2;
                    board[x][y-1]=0;
                    doit();
-                
+                numberOfMoves--;
             }
-            
+            movescheck();
                break;
            case 37:
-                numberOfMoves--;
+                
            if (board[x][y-1]!=1 && board[x][y-1]!=3)//&& plansza.length > 0 && plansza[x][y-1]!=1)
              {   y--;
                board[x][y]=2;
              board[x][y+1]=0;
+             numberOfMoves--;
             } 
            else if (board[x][y-1]==3)
            {    y--;
                board[x][y]=2;
              board[x][y+1]=0;
                doit();
+               numberOfMoves--;
            }
+           movescheck();
            break;
+          
        }
        repaint();
     }
@@ -164,18 +181,33 @@ public class TheMaze extends TheMap implements KeyListener {
     }
     
     
-   public void timer () throws InterruptedException
+    
+  static public int timer () throws InterruptedException
     {
-      int start = 5;
+      int start = 0;
       
       do 
-      { System.out.println(start);
-         start --;
+      //if(numberOfMoves > 0)
+      { 
+         System.out.println(start);
+         time ++;
          sleep(1000);
       }
-      while (start > 0);
+      while (numberOfMoves > 0);
+      
+      return start;
       
     }  
+  
+  public void restartGame()
+  {
+      numberOfMoves=5;
+      score=0;
+     // TheMazeGame.start=0;
+     // stop= System.currentTimeMillis()/1000 - x;
+      
+      create();
+      repaint();
+  }
     
- 
 }
