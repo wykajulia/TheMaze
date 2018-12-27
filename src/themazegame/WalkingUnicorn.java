@@ -23,7 +23,7 @@ public class WalkingUnicorn extends TheMazeImages implements KeyListener{
    int b;
    static int score = 0;
    static int time =0;
-   static int numberOfMoves = 5;
+   static int numberOfMoves = 15;
    static long stop;
  // static int time = timer();
   //long start=System.currentTimeMillis();
@@ -48,6 +48,10 @@ public class WalkingUnicorn extends TheMazeImages implements KeyListener{
     
     public void check(int c, int d)
     {
+      // if(!wynik.getClass().isAssignableFrom(Integer.class))
+       //repaint();
+        try {
+
         if( c+d == Integer.parseInt(wynik))
         {
         score ++;
@@ -59,34 +63,56 @@ public class WalkingUnicorn extends TheMazeImages implements KeyListener{
         score--;
         //JOptionPane.showMessageDialog(null, "Zła odpowiedź :( ");
         JOptionPane.showMessageDialog(null, "Zła odpowiedź :(","", JOptionPane.ERROR_MESSAGE);
-
         }
+      } 
+        catch(NumberFormatException e) {
+	System.err.println("This is not a number!"); }
+         
+        scorecheck();
         
-        System.out.println(score);
     }  
     
-     void movescheck() 
+    public void movescheck() 
     {
-     if (numberOfMoves <=0)
-     {     
+       
+        if (numberOfMoves <=0)
+     {   
+         repaint();
          stop=System.currentTimeMillis();
          long x=(stop - TheMazeGame.start)/1000;
          JOptionPane.showMessageDialog(null, "Twoje ruchy się skończyły. Zdobyłes " + score + " punktów. W czasie : " + x + "s" );
          TheMazeGame.game.dispose();
-         Menu menu = new Menu();
-         restartGame();
+         numberOfMoves=15;
+         score=0;
+        
+        // Menu menu = new Menu();
+        // restartGame();
            
           //System.exit(0);
           
      }
     }
     
+    public void scorecheck()
+    {
+        if ( score==3 || score ==6 || score ==9 || score ==12)
+        {
+        numberOfMoves++;
+          JOptionPane.showMessageDialog(null, "Brawo! Masz już "+ score + " punkty. Otrzymujesz dodatkowy ruch" );
+          
+        }
+          
+    }
+    
     public void doit()
     {
         a=exercise();
         b =exercise();
-        wynik =  JOptionPane.showInputDialog(null, "Podaj wynik:  " + a + " + " + b );
+        wynik  =  JOptionPane.showInputDialog(null, "Podaj wynik:  " + a + " + " + b );
+       // wynik = Integer.parseInt(inputString);
+
         check(a,b);
+        
     }
     
 
@@ -182,7 +208,7 @@ public class WalkingUnicorn extends TheMazeImages implements KeyListener{
     
     
     
-  static public int timer () throws InterruptedException
+  public int timer () throws InterruptedException
     {
       int start = 0;
       
@@ -191,7 +217,9 @@ public class WalkingUnicorn extends TheMazeImages implements KeyListener{
       { 
          System.out.println(start);
          time ++;
+         start++;
          sleep(1000);
+         repaint();
       }
       while (numberOfMoves > 0);
       
@@ -199,7 +227,7 @@ public class WalkingUnicorn extends TheMazeImages implements KeyListener{
       
     }  
   
-  public void restartGame()
+   /*public void restartGame()
   {
       numberOfMoves=5;
       score=0;
@@ -208,6 +236,6 @@ public class WalkingUnicorn extends TheMazeImages implements KeyListener{
       
       create();
       repaint();
-  }
+  } */
     
 }

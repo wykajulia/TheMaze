@@ -154,9 +154,9 @@ public class TheMazeImages extends JFrame{
      g.setColor(Color.DARK_GRAY);
      g.setFont(new Font("TimesRoman", Font.PLAIN, 25));
       g.drawString("Liczba punktów: " + WalkingUnicorn.score  ,20, 740);
-        
+      
              //   drawScore(g2);
-             g.drawString("Czas: " /*+  TheMazeGame.start/1000 */ + " s",240, 740);
+             g.drawString("Czas: " + WalkingUnicorn.time +" s",240, 740);
         
       g.drawString("Pozostało ruchów: " + WalkingUnicorn.numberOfMoves ,380, 740);
       

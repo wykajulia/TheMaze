@@ -22,10 +22,10 @@ public class TheMazeGame {
     public static void main(String[] args) throws InterruptedException  {
         // TODO code application logic here
         
-        start=System.currentTimeMillis();
-         game = new TheMazeWindow();
-        //WalkingUnicorn.timer();
-       
+       // start=System.currentTimeMillis();
+        //game = new TheMazeWindow();
+       // WalkingUnicorn.timer();
+       Menu menu = new Menu();
        /// game.addKeyListener(new WalkingUnicorn());
        
         
