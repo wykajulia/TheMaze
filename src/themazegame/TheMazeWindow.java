@@ -14,7 +14,7 @@ import javax.swing.JFrame;
  */
 public class TheMazeWindow extends WalkingUnicorn{
     
-    public TheMazeWindow () throws InterruptedException
+    public TheMazeWindow (int x, int y) throws InterruptedException
     { 
         setSize(700,780);
         setLayout(null);
@@ -22,7 +22,7 @@ public class TheMazeWindow extends WalkingUnicorn{
         setBackground(Color.LIGHT_GRAY); 
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocation(600,180);
+        setLocation(x,y);
         setTitle("The Maze");
          
         

@@ -25,12 +25,13 @@ public class Menu extends JFrame implements ActionListener{
      JButton startGame , theEnd , button;
      
     
-    Menu()
+    Menu(int x, int y)
     {   
         setSize(700,780);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocation(600,180);
+        //setLocation(600,180);
+        setLocation(x,y);
         setTitle("The Menu");
         
         
@@ -56,7 +57,7 @@ public class Menu extends JFrame implements ActionListener{
         
         if (action.getSource() == startGame)
             try {
-                TheMazeGame.game = new TheMazeWindow(); 
+                TheMazeGame.game = new TheMazeWindow(TheMazeGame.xCenter,TheMazeGame.yCenter); 
                 TheMazeGame.start =System.currentTimeMillis();
         } catch (InterruptedException ex) {
             Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);

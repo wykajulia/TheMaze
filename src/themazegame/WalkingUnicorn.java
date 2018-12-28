@@ -208,7 +208,7 @@ public class WalkingUnicorn extends TheMazeImages implements KeyListener{
     
     
     
-  public int timer () throws InterruptedException
+ /* public int timer () throws InterruptedException
     {
       int start = 0;
       

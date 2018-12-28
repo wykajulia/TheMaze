@@ -10,30 +10,38 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import static java.lang.Thread.sleep;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import javax.swing.Timer;
+
 
 
 /**
  *
  * @author wykaj
  */
-public class TheMazeImages extends JFrame{
+public class TheMazeImages extends JFrame implements ActionListener{
     
      public Image wall,unicorn,grass,task;
      int[][]board=new int[10][10];
      int board2[][];
      int x=5; 
      int y=7;
+     int time = 0;
+     Timer timer=new Timer(1000, (ActionListener) this);
+
      
      public TheMazeImages()
      {
-
+         timer.start();
          try {
              wall= ImageIO.read(new File("wall.png"));
              grass= ImageIO.read(new File("grass.png"));
@@ -99,24 +107,11 @@ public class TheMazeImages extends JFrame{
         drawTheMap(g);
         
     }
-      
-  /*   private void drawScore(Graphics2D g) {
-
-        
-        String s;
-
-        
-        g.setColor(new Color(96, 128, 255));
-        s = "Score: " + TheMaze.score;
-        g.drawString(s, 100,710);
-
-       
-    }  */
-        
+             
        public void drawTheMap(Graphics g)
        {
           
-        Image img=createImage(getSize().width, getSize().height);
+       Image img=createImage(getSize().width, getSize().height);
        Graphics2D g2=(Graphics2D)img.getGraphics();
      
        
@@ -147,20 +142,20 @@ public class TheMazeImages extends JFrame{
                }
             }
         }
-        
-      
-      g.drawImage(img, 0, 0, this); 
-     //  g.setColor(new Color(96, 128, 255));
-     g.setColor(Color.DARK_GRAY);
-     g.setFont(new Font("TimesRoman", Font.PLAIN, 25));
-      g.drawString("Liczba punktów: " + WalkingUnicorn.score  ,20, 740);
-      
-             //   drawScore(g2);
-             g.drawString("Czas: " + WalkingUnicorn.time +" s",240, 740);
-        
-      g.drawString("Pozostało ruchów: " + WalkingUnicorn.numberOfMoves ,380, 740);
+             
+        g.drawImage(img, 0, 0, this); 
+        g.setColor(Color.DARK_GRAY);
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 25));
+        g.drawString("Liczba punktów: " + WalkingUnicorn.score  ,20, 740);
+        g.drawString("Czas: " + time +" s",240, 740);
+        g.drawString("Pozostało ruchów: " + WalkingUnicorn.numberOfMoves ,380, 740);
       
    }
-      
-       
+     
+     public void actionPerformed(ActionEvent ev){
+        if(ev.getSource()==timer){
+        time++;
+        repaint();
+        }    
+    } 
 }
