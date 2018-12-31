@@ -7,8 +7,12 @@ package themazegame;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 import static java.lang.Thread.sleep;
 import java.util.Random;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -115,6 +119,14 @@ public class WalkingUnicorn extends TheMazeImages implements KeyListener{
         
     }
     
+    public void boom()
+    {
+        JOptionPane.showMessageDialog(null, "Wszedłeś na bombe! Wybuchasz. Gra skończona" );
+        numberOfMoves =15;
+        score = 0;
+        TheMazeGame.game.dispose();
+    }
+    
 
     @Override
     public void keyTyped(KeyEvent arg0) {
@@ -128,12 +140,13 @@ public class WalkingUnicorn extends TheMazeImages implements KeyListener{
        switch(move)
        {
            case 38:            
-            if (board[x-1][y]==0 && board[x-1][y]!=3)
+            if (board[x-1][y]!=1 && board[x-1][y]!=3 && board[x-1][y]!=4)
                {  
                    x--;
                    board[x][y]=2;
                    board[x+1][y]=0; 
-                   numberOfMoves--;                  
+                   numberOfMoves--;     
+                   movescheck();
                } 
             else if (board[x-1][y]==3)
             {
@@ -142,16 +155,23 @@ public class WalkingUnicorn extends TheMazeImages implements KeyListener{
                  board[x+1][y]=0;
                  doit();  
                  numberOfMoves--;
+                 movescheck();
             }
-            movescheck();
+            else if(board[x-1][y]==4)
+            {   
+                playSound(new File("boooom.wav"));
+                boom();
+            }
+            
                break;
            case 40:
                 
-           if (board[x+1][y]!=1 && board[x+1][y]!=3) 
+           if (board[x+1][y]!=1 && board[x+1][y]!=3 && board[x+1][y]!=4) 
              {   x++;
                board[x][y]=2;
              board[x-1][y]=0;
              numberOfMoves--;
+             movescheck();
             } 
          else if (board[x+1][y]==3)
           {
@@ -160,16 +180,23 @@ public class WalkingUnicorn extends TheMazeImages implements KeyListener{
              board[x-1][y]=0;
              doit();
             numberOfMoves--;
+            movescheck();
           }
-           movescheck();
+         else if( board[x+1][y]==4)
+            {   
+                playSound(new File("boooom.wav"));
+                boom();
+            }
+           
            break;
             case 39:
                 
-            if (board[x][y+1]!=1 && board[x][y+1]!=3) //&& plansza.length > 0 && plansza[x][y+1]!=1)
+            if (board[x][y+1]!=1 && board[x][y+1]!=3 && board[x][y+1]!=4) 
                {   y++;
                    board[x][y]=2;
                    board[x][y-1]=0;
                    numberOfMoves--;
+                   movescheck();
                } 
             else if (board[x][y+1]==3)
             {      y++;
@@ -177,16 +204,23 @@ public class WalkingUnicorn extends TheMazeImages implements KeyListener{
                    board[x][y-1]=0;
                    doit();
                 numberOfMoves--;
+                movescheck();
             }
-            movescheck();
+            else if(board[x][y+1]==4)
+               {   
+                playSound(new File("boooom.wav"));
+                boom();
+            }
+            
                break;
            case 37:
                 
-           if (board[x][y-1]!=1 && board[x][y-1]!=3)//&& plansza.length > 0 && plansza[x][y-1]!=1)
+           if (board[x][y-1]!=1 && board[x][y-1]!=3 && board[x][y-1]!=4)
              {   y--;
                board[x][y]=2;
              board[x][y+1]=0;
              numberOfMoves--;
+             movescheck();
             } 
            else if (board[x][y-1]==3)
            {    y--;
@@ -194,14 +228,36 @@ public class WalkingUnicorn extends TheMazeImages implements KeyListener{
              board[x][y+1]=0;
                doit();
                numberOfMoves--;
+               movescheck();
            }
-           movescheck();
+           else if(board[x][y-1]==4)
+           {   
+                playSound(new File("boooom.wav"));
+                boom();
+            }
+           
            break;
           
        }
        repaint();
     }
+    
+    public static synchronized void playSound(final File f) {
+        new Thread(new Runnable() {
+          public void run() {
+            try {
+              Clip clip = AudioSystem.getClip();
+              AudioInputStream inputStream = AudioSystem.getAudioInputStream(f);
+              clip.open(inputStream);
+              clip.start(); 
+            } catch (Exception e) {
+              System.err.println(e.getMessage());
+            }
+          }
+        }).start();
+    }//playSound()
 
+   
     @Override
     public void keyReleased(KeyEvent arg0) {
     }

@@ -30,7 +30,7 @@ import javax.swing.Timer;
  */
 public class TheMazeImages extends JFrame implements ActionListener{
     
-     public Image wall,unicorn,grass,task;
+     public Image wall,unicorn,grass,task, bomb;
      int[][]board=new int[10][10];
      int board2[][];
      int x=5; 
@@ -47,6 +47,7 @@ public class TheMazeImages extends JFrame implements ActionListener{
              grass= ImageIO.read(new File("grass.png"));
              unicorn= ImageIO.read(new File("unicorn.png"));
              task = ImageIO.read(new File("star.png"));
+             bomb =ImageIO.read(new File("bombe.png"));
          } catch (IOException ex) {
              Logger.getLogger(TheMazeImages.class.getName()).log(Level.SEVERE, null, ex);
          }
@@ -69,10 +70,10 @@ public class TheMazeImages extends JFrame implements ActionListener{
           
           int board2[][] = {{1,1,1,1,1,1,1,1,1,1},
                          {1,0,1,0,1,0,1,0,0,1},
-                         {1,0,1,0,0,0,1,0,1,1},
+                         {1,0,1,0,4,0,1,0,1,1},
                          {1,0,0,0,0,0,1,0,0,1},
                          {1,1,1,0,1,1,1,0,0,1},
-                         {1,0,0,0,1,0,0,0,0,1},
+                         {1,0,0,0,1,4,0,0,0,1},
                          {1,0,1,0,0,0,0,1,1,1},
                          {1,0,1,1,0,1,0,0,0,1},
                          {1,0,0,0,0,1,0,0,0,1},
@@ -85,7 +86,7 @@ public class TheMazeImages extends JFrame implements ActionListener{
         {
             for(int j=0; j<10;j++)
             {   
-                if( board2[i][j] == board[x][y] ) // board2[i][j]!=1 &&
+                if( board2[i][j] == board[x][y] ) 
                     board[x][y]=2;             
                 else 
                 board[i][j]=board2[i][j];
@@ -99,6 +100,10 @@ public class TheMazeImages extends JFrame implements ActionListener{
               board[o][p]=3;
               else k--;
           }
+          
+          //board[5][5]=4;
+          //board[2][4]=4;
+          
       }
       
       //@Override
@@ -124,8 +129,6 @@ public class TheMazeImages extends JFrame implements ActionListener{
                 switch(pole)
              {      
                     case 1: 
-                         //Rectangle2D rectangle = new Rectangle2D.Double(10, 10, 380, 380);
-                         //g2.draw(rectangle);
                         g2.drawImage(wall, 70*j, 70*i, this);
                         break;
                     case 2:
@@ -134,7 +137,9 @@ public class TheMazeImages extends JFrame implements ActionListener{
                     case 3:
                        g2.drawImage(task, 70*j,70*i, this);
                         break;
-                                
+                     case 4:
+                        g2.drawImage(bomb, 70*j,70*i, this);
+                        break;               
                     case 0:
                         g2.drawImage(grass, 70*j,70*i, this);
                         break;            
