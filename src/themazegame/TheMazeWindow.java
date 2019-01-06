@@ -1,19 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package themazegame;
 
 import java.awt.Color;
 import javax.swing.JFrame;
 
 /**
- *
+ * Tworzenie okna gry.
  * @author wykaj
  */
 public class TheMazeWindow extends WalkingUnicorn{
     
+    /**
+     * Konstruktor klasy.
+     * @param x  odpowiedzialne za ustawienie menu na środku ekranu.
+     * @param y  odpowiedzialne za ustawienie menu na środku ekranu.
+     * @throws InterruptedException
+     */
     public TheMazeWindow (int x, int y) throws InterruptedException
     { 
         setSize(700,780);
@@ -24,8 +26,6 @@ public class TheMazeWindow extends WalkingUnicorn{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocation(x,y);
         setTitle("The Maze");
-         
-        
-        
+ 
     }
 }

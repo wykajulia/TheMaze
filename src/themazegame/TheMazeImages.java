@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package themazegame;
 
 import java.awt.Color;
@@ -14,7 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import static java.lang.Thread.sleep;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,20 +20,26 @@ import javax.swing.Timer;
 
 
 /**
- *
+ *Klasa odpowiedzialna za tworzenie "mapki" labiryntu
  * @author wykaj
  */
 public class TheMazeImages extends JFrame implements ActionListener{
-    
-     public Image wall,unicorn,grass,task, bomb;
-     int[][]board=new int[10][10];
-     int board2[][];
+     
+    /** Ikona obiektu: ściana, pionek, trawa, zadanie, bomba */
+    public Image wall,unicorn,grass,task, bomb; 
+    /** Tablica mapy */
+    int[][]board=new int[10][10];
+    /** Współrzędne ustawienia pionka */ 
      int x=5; 
      int y=7;
+     /** Zmienna do zliczania czasu */
      int time = 0;
+     /** Timer potrzebny do wyświetlania czasu gry co sekundę */
      Timer timer=new Timer(1000, (ActionListener) this);
 
-     
+     /** 
+      * Konstruktor odpowiedzialny za wczytanie obrazków z pliku 
+      */
      public TheMazeImages()
      {
          timer.start();
@@ -47,24 +48,29 @@ public class TheMazeImages extends JFrame implements ActionListener{
              grass= ImageIO.read(new File("grass.png"));
              unicorn= ImageIO.read(new File("unicorn.png"));
              task = ImageIO.read(new File("star.png"));
-             bomb =ImageIO.read(new File("bombe.png"));
+             bomb =ImageIO.read(new File("bomb.png"));
          } catch (IOException ex) {
              Logger.getLogger(TheMazeImages.class.getName()).log(Level.SEVERE, null, ex);
          }
          
          create();
- 
      }
      
+    /**
+     * Losowanie cyfr, aby pole z zadaniem miało losowe miejsce w tablicy
+     * @return zwraca int
+     */
        public int random()
       {
           Random r = new Random();
           int n= r.nextInt(9) + 1;
           return n;
       }
-      
-     
-       
+        
+      /** 
+       * Towrzenie mapy/planszy.
+       * Konkretnnym miejscom w tablicy przypisywane są cyfry.
+       */ 
       public void create()
       {    
           
@@ -81,7 +87,7 @@ public class TheMazeImages extends JFrame implements ActionListener{
                          };
          
           
-          //ustawienie ludzika
+          //ustawienie pionka
           for(int i=0; i<10;i++)
         {
             for(int j=0; j<10;j++)
@@ -100,19 +106,24 @@ public class TheMazeImages extends JFrame implements ActionListener{
               board[o][p]=3;
               else k--;
           }
-          
-          //board[5][5]=4;
-          //board[2][4]=4;
-          
       }
       
       //@Override
+
+    /**
+     * Rusowanie mapy
+     * @param g
+     */
         public void paint(Graphics g)
     {
-        drawTheMap(g);
-        
+        drawTheMap(g);   
     }
-             
+     /**
+     * Funkcja odpowiedzialna za rysowanie tablicy. 
+     * Odpowiednie cyfry odpowiadają konkretnym ikonom.
+     * Dodatkowo wyświetlanych jest czas, liczba punktów i ruchów.
+     * @param g
+      */        
        public void drawTheMap(Graphics g)
        {
           
@@ -156,7 +167,13 @@ public class TheMazeImages extends JFrame implements ActionListener{
         g.drawString("Pozostało ruchów: " + WalkingUnicorn.numberOfMoves ,380, 740);
       
    }
-     
+    
+
+    /**
+     * Funkcja odpowiedzialna za odświeżanie co sekunde, aby aktualny czas gry  
+     * był dobrze wyświetlany
+     * @param ev
+     */
      public void actionPerformed(ActionEvent ev){
         if(ev.getSource()==timer){
         time++;
